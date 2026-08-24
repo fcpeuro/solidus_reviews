@@ -2,7 +2,7 @@
 
 class Spree::ReviewsConfiguration < Spree::Preferences::Configuration
   def self.boolean_preferences
-    %w(display_unapproved_reviews include_unapproved_reviews feedback_rating show_email require_login track_locale allow_image_upload)
+    %w[display_unapproved_reviews include_unapproved_reviews feedback_rating show_email require_login track_locale allow_image_upload]
   end
 
   # include non-approved reviews in (public) listings

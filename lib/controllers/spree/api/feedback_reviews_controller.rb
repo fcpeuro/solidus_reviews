@@ -58,7 +58,7 @@ module Spree
 
       # Finds user based on api_key or by user_id if api_key belongs to an admin.
       def find_review_user
-        if params[:user_id] && @current_user_roles.include?('admin')
+        if params[:user_id] && @current_user_roles.include?("admin")
           @current_api_user = Spree.user_class.find(params[:user_id])
         end
       end
@@ -84,7 +84,7 @@ module Spree
       # Converts rating strings like "5 units" to "5"
       # Operates on params
       def sanitize_rating
-        params[:rating].to_s.dup.sub!(/\s*[^0-9]*\z/, '') unless params[:feedback_review] && params[:feedback_review][:rating].blank?
+        params[:rating].to_s.dup.sub!(/\s*[^0-9]*\z/, "") unless params[:feedback_review] && params[:feedback_review][:rating].blank?
       end
     end
   end

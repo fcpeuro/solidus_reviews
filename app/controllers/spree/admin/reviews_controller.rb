@@ -11,9 +11,9 @@ class Spree::Admin::ReviewsController < Spree::Admin::ResourceController
     review = Spree::Review.find(params[:id])
 
     if review.update_attribute(:approved, true)
-      flash[:success] = I18n.t('spree.info_approve_review')
+      flash[:success] = I18n.t("spree.info_approve_review")
     else
-      flash[:error] = I18n.t('spree.error_approve_review')
+      flash[:error] = I18n.t("spree.error_approve_review")
     end
 
     redirect_to admin_reviews_path
@@ -21,7 +21,7 @@ class Spree::Admin::ReviewsController < Spree::Admin::ResourceController
 
   def edit
     if @review.product.nil?
-      flash[:error] = I18n.t('spree.error_no_product')
+      flash[:error] = I18n.t("spree.error_no_product")
       redirect_to admin_reviews_path
     end
   end

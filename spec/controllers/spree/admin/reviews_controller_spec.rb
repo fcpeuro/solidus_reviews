@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 describe Spree::Admin::ReviewsController do
   stub_authorization!
@@ -13,48 +13,48 @@ describe Spree::Admin::ReviewsController do
     allow(controller).to receive(:spree_current_user).and_return(user)
   end
 
-  describe '#index' do
-    it 'list reviews' do
+  describe "#index" do
+    it "list reviews" do
       reviews = create_list(:review, 2, product: product)
-      get :index, params: { product_id: product.slug }
+      get :index, params: {product_id: product.slug}
       expect(assigns[:reviews]).to match_array reviews
     end
   end
 
-  describe '#approve' do
-    it 'show notice message when approved' do
+  describe "#approve" do
+    it "show notice message when approved" do
       review.update_attribute(:approved, true)
-      get :approve, params: { id: review.id }
+      get :approve, params: {id: review.id}
       expect(response).to redirect_to spree.admin_reviews_path
-      expect(flash[:success]).to eq I18n.t('spree.info_approve_review')
+      expect(flash[:success]).to eq I18n.t("spree.info_approve_review")
     end
 
-    it 'show error message when not approved' do
+    it "show error message when not approved" do
       expect_any_instance_of(Spree::Review).to receive(:save).and_return(false)
-      get :approve, params: { id: review.id }
-      expect(flash[:error]).to eq I18n.t('spree.error_approve_review')
+      get :approve, params: {id: review.id}
+      expect(flash[:error]).to eq I18n.t("spree.error_approve_review")
     end
   end
 
-  describe '#edit' do
+  describe "#edit" do
     specify do
-      get :edit, params: { id: review.id }
+      get :edit, params: {id: review.id}
       expect(response.status).to eq(200)
     end
 
-    context 'when product is nil' do
+    context "when product is nil" do
       before do
         review.product = nil
         review.save!
       end
 
-      it 'flash error' do
-        get :edit, params: { id: review.id }
-        expect(flash[:error]).to eq I18n.t('spree.error_no_product')
+      it "flash error" do
+        get :edit, params: {id: review.id}
+        expect(flash[:error]).to eq I18n.t("spree.error_no_product")
       end
 
-      it 'redirect to admin-reviews page' do
-        get :edit, params: { id: review.id }
+      it "redirect to admin-reviews page" do
+        get :edit, params: {id: review.id}
         expect(response).to redirect_to spree.admin_reviews_path
       end
     end

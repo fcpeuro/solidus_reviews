@@ -18,10 +18,10 @@ module SolidusReviews
 
         self.reviews_count = reviews_count
         self.avg_rating = if reviews_count > 0
-                            '%.1f' % (reviews.default_approval_filter.sum(:rating).to_f / reviews_count)
-                          else
-                            0
-                          end
+          "%.1f" % (reviews.default_approval_filter.sum(:rating).to_f / reviews_count)
+        else
+          0
+        end
         save
       end
 

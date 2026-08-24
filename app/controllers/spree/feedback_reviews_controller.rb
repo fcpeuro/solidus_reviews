@@ -36,6 +36,6 @@ class Spree::FeedbackReviewsController < Spree::StoreController
   end
 
   def sanitize_rating
-    params[:feedback_review][:rating].to_s.sub!(/\s*[^0-9]*\z/, '') unless params[:feedback_review] && params[:feedback_review][:rating].blank?
+    params[:feedback_review][:rating].to_s.sub!(/\s*[^0-9]*\z/, "") unless params[:feedback_review] && params[:feedback_review][:rating].blank?
   end
 end
