@@ -12,10 +12,10 @@ module Spree
 
       def index
         @reviews = if @product
-                     Spree::Review.default_approval_filter.where(product: @product)
-                   else
-                     Spree::Review.where(user: @current_api_user)
-                   end
+          Spree::Review.default_approval_filter.where(product: @product)
+        else
+          Spree::Review.where(user: @current_api_user)
+        end
 
         respond_with(@reviews)
       end
@@ -77,15 +77,15 @@ module Spree
       # Loads product from product id.
       def load_product
         @product = if params[:product_id]
-                     Spree::Product.friendly.find(params[:product_id])
-                   else
-                     @review&.product
-                   end
+          Spree::Product.friendly.find(params[:product_id])
+        else
+          @review&.product
+        end
       end
 
       # Finds user based on api_key or by user_id if api_key belongs to an admin.
       def find_review_user
-        if params[:user_id] && @current_user_roles.include?('admin')
+        if params[:user_id] && @current_user_roles.include?("admin")
           @current_api_user = Spree.user_class.find(params[:user_id])
         end
       end
@@ -106,7 +106,7 @@ module Spree
       # Converts rating strings like "5 units" to "5"
       # Operates on params
       def sanitize_rating
-        params[:rating].sub!(/\s*[^0-9]*\z/, '') if params[:rating].present?
+        params[:rating].sub!(/\s*[^0-9]*\z/, "") if params[:rating].present?
       end
     end
   end

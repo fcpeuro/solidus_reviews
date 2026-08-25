@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 describe Spree::Product do
   it { is_expected.to respond_to(:avg_rating) }
   it { is_expected.to respond_to(:reviews) }
   it { is_expected.to respond_to(:stars) }
 
-  describe '#stars' do
+  describe "#stars" do
     let(:product) { build(:product) }
 
-    it 'rounds' do
+    it "rounds" do
       allow(product).to receive(:avg_rating).and_return(3.7)
       expect(product.stars).to eq(4)
 
@@ -18,7 +18,7 @@ describe Spree::Product do
       expect(product.stars).to eq(2)
     end
 
-    it 'handles a nil value' do
+    it "handles a nil value" do
       allow(product).to receive(:avg_rating).and_return(nil)
 
       expect {
@@ -27,10 +27,10 @@ describe Spree::Product do
     end
   end
 
-  describe '#recalculate_rating' do
+  describe "#recalculate_rating" do
     let!(:product) { create(:product) }
 
-    context 'when there are approved reviews' do
+    context "when there are approved reviews" do
       let!(:approved_review_1) { create(:review, product: product, approved: true, rating: 4) }
       let!(:approved_review_2) { create(:review, product: product, approved: true, rating: 5) }
       let!(:unapproved_review_1) { create(:review, product: product, approved: false, rating: 4) }

@@ -16,14 +16,14 @@ class Spree::ReviewsController < Spree::StoreController
   def edit
     @review = Spree::Review.find(params[:id])
     if @review.product.nil?
-      flash[:error] = I18n.t('spree.error_no_product')
+      flash[:error] = I18n.t("spree.error_no_product")
     end
     authorize! :update, @review
   end
 
   # save if all ok
   def create
-    review_params[:rating].sub!(/\s*[^0-9]*\z/, '') if review_params[:rating].present?
+    review_params[:rating].sub!(/\s*[^0-9]*\z/, "") if review_params[:rating].present?
 
     @review = Spree::Review.new(review_params)
     @review.product = @product
@@ -37,7 +37,7 @@ class Spree::ReviewsController < Spree::StoreController
 
     authorize! :create, @review
     if @review.save
-      flash[:notice] = I18n.t('spree.review_successfully_submitted')
+      flash[:notice] = I18n.t("spree.review_successfully_submitted")
       redirect_to spree.product_path(@product)
     else
       render :new
@@ -45,7 +45,7 @@ class Spree::ReviewsController < Spree::StoreController
   end
 
   def update
-    review_params[:rating].sub!(/\s*[^0-9]*\z/, '') if params[:review][:rating].present?
+    review_params[:rating].sub!(/\s*[^0-9]*\z/, "") if params[:review][:rating].present?
 
     @review = Spree::Review.find(params[:id])
 
@@ -56,7 +56,7 @@ class Spree::ReviewsController < Spree::StoreController
 
     authorize! :update, @review
     if @review.update(review_params)
-      flash[:notice] = I18n.t('spree.review_successfully_submitted')
+      flash[:notice] = I18n.t("spree.review_successfully_submitted")
       redirect_to spree.product_path(@product)
     else
       render :edit

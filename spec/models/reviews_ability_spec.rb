@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 require "cancan/matchers"
 
 describe Spree::ReviewsAbility do
-  describe '.allow_anonymous_reviews?' do
-    it 'depends on Spree::Reviews::Config[:require_login]' do
+  describe ".allow_anonymous_reviews?" do
+    it "depends on Spree::Reviews::Config[:require_login]" do
       stub_spree_preferences(Spree::Reviews::Config, require_login: false)
       expect(described_class.allow_anonymous_reviews?).to be true
       stub_spree_preferences(Spree::Reviews::Config, require_login: true)
@@ -14,16 +14,16 @@ describe Spree::ReviewsAbility do
     end
   end
 
-  context 'permissions' do
+  context "permissions" do
     let(:user_without_email) { double(:user, email: nil) }
-    let(:user_with_email) { double(:user, email: 'a@b.com') }
+    let(:user_with_email) { double(:user, email: "a@b.com") }
 
-    context 'when anonymous reviews are allowed' do
+    context "when anonymous reviews are allowed" do
       before do
         stub_spree_preferences(Spree::Reviews::Config, require_login: false)
       end
 
-      it 'lets anyone create a review or feedback review' do
+      it "lets anyone create a review or feedback review" do
         [user_without_email, user_with_email].each do |u|
           expect(described_class.new(u)).to be_able_to(:create, Spree::Review.new)
           expect(described_class.new(u)).to be_able_to(:create, Spree::FeedbackReview.new)
@@ -31,12 +31,12 @@ describe Spree::ReviewsAbility do
       end
     end
 
-    context 'when anonymous reviews are not allowed' do
+    context "when anonymous reviews are not allowed" do
       before do
         stub_spree_preferences(Spree::Reviews::Config, require_login: true)
       end
 
-      it 'only allows users with an email to create a review or feedback review' do
+      it "only allows users with an email to create a review or feedback review" do
         expect(described_class.new(user_without_email)).not_to be_able_to(:create, Spree::Review.new)
         expect(described_class.new(user_without_email)).not_to be_able_to(:create, Spree::FeedbackReview.new)
 

@@ -5,7 +5,7 @@ module SolidusReviews
     module UserPatch
       def self.prepended(base)
         base.class_eval do
-          has_many :reviews, class_name: 'Spree::Review'
+          has_many :reviews, class_name: "Spree::Review"
         end
       end
 

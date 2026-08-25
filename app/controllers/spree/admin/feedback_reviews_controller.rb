@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Spree::Admin::FeedbackReviewsController < Spree::Admin::ResourceController
-  belongs_to 'spree/review'
+  belongs_to "spree/review"
   def index
     @collection = parent.feedback_reviews
   end
