@@ -14,7 +14,7 @@ module Spree
       def create
         if @review.present?
           @feedback_review = @review.feedback_reviews.new(feedback_review_params)
-          @feedback_review.user = @review_user
+          @feedback_review.user = @current_api_user
           @feedback_review.locale = I18n.locale.to_s if Spree::Reviews::Config[:track_locale]
         end
 
@@ -58,11 +58,9 @@ module Spree
 
       # Finds user based on api_key or by user_id if api_key belongs to an admin.
       def find_review_user
-        @review_user = if params[:user_id] && current_user_roles.include?('admin')
-                         Spree.user_class.find(params[:user_id])
-                       else
-                         current_api_user
-                       end
+        if params[:user_id] && @current_user_roles.include?('admin')
+          @current_api_user = Spree.user_class.find(params[:user_id])
+        end
       end
 
       # Loads any review that is shared between the user and product
@@ -77,7 +75,7 @@ module Spree
 
       # Ensures that a user can't leave multiple feedbacks on a single review
       def prevent_multiple_feedback_reviews
-        @feedback_review = @review.feedback_reviews.find_by(user_id: @review_user)
+        @feedback_review = @review.feedback_reviews.find_by(user_id: @current_api_user)
         if @feedback_review.present?
           invalid_resource!(@feedback_review)
         end
